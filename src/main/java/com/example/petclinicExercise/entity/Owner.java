@@ -1,11 +1,6 @@
 package com.example.petclinicExercise.entity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,9 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,48 +52,6 @@ public class Owner{
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_id")
-	private Set<Pet> pets;
-
-	public void addPet(Pet pet) {
-		if (pet.isNew()) {
-			getPetsInternal().add(pet);
-		}
-		pet.setOwner(this);
-	}
-
-	protected Set<Pet> getPetsInternal() {
-		if (this.pets == null) {
-			this.pets = new HashSet<>();
-		}
-		return this.pets;
-	}
-	
-	protected void setPetsInternal(Set<Pet> pets) {
-		this.pets = pets;
-	}
-
-	public List<Pet> getPets() {
-		List<Pet> sortedPets = new ArrayList<>(getPetsInternal());
-		PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
-		return Collections.unmodifiableList(sortedPets);
-	}
-	
-	public Pet getPet(String name) {
-		return getPet(name, false);
-	}
-	
-	public Pet getPet(String name, boolean ignoreNew) {
-		name = name.toLowerCase();
-		for (Pet pet : getPetsInternal()) {
-			if (!ignoreNew || !pet.isNew()) {
-				String compName = pet.getName();
-				compName = compName.toLowerCase();
-				if (compName.equals(name)) {
-					return pet;
-				}
-			}
-		}
-		return null;
-	}
+	private List<Pet> pets;
 
 }

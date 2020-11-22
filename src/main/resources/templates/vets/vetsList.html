@@ -56,7 +56,31 @@
         <div id="body">
             <!-- Main Content -->
             <div id="main-content" class="container">
-                
+            	<br />
+            	<h2 id="product-title-2" class="text-center">Veterinarians</h2>
+            	<br />
+		        <section class="col-12 product-section">
+		            <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Specialties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="vet : ${vets}">
+                                <td ><a th:href="@{/vets/{vetId}(vetId=${vet.id})}" th:text="${vet.firstName + ' ' + vet.lastName}"/></a></td>
+                                <td><span th:each="specialty : ${vet.specialties}" th:text="${specialty.name} + ' '"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+		        </section>
+	    		<br />
+            	<div class="row" id="add-vet-btn">
+            		<a th:href="@{/vets/new}">
+						<button type="submit" value="submit" class="btn btn-info">Add Veterinarian</button>
+                    </a>
+            	</div>
             </div> <!-- Main Content End -->
         </div>
         </div>

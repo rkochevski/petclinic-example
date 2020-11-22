@@ -152,6 +152,10 @@ body {
     font-size: 1.2em;
 }
 
+#add-owner-btn, #add-vet-btn {
+	padding-left: 30px;
+}
+
 /* Medium Devices*/
 @media (min-width: 768px) and (max-width: 991px) {
     /* #logo-img {

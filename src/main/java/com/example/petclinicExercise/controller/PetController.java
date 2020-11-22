@@ -33,7 +33,7 @@ public class PetController {
 	public String createOrUpdatePetForm(@PathVariable("ownerId") Integer ownerId, Model model) {
 		Owner owner = ownerService.findById(ownerId);
 		Pet pet = new Pet();
-		owner.addPet(pet);
+		owner.getPets().add(pet);
 		List<PetType> listPetTypes = petTypeService.getAllPetTypes();
 		model.addAttribute("listPetTypes", listPetTypes);
 		model.addAttribute("owner", owner);
