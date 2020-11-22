@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pet implements Serializable {
+public class Pet {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

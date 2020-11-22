@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
@@ -30,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Owner implements Serializable {
+public class Owner{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +58,8 @@ public class Owner implements Serializable {
 	@Digits(fraction = 0, integer = 8)
 	private String telephone;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "owner_id")
 	private Set<Pet> pets;
 
 	public void addPet(Pet pet) {
