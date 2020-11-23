@@ -21,13 +21,28 @@ public class OwnerService {
 	}
 	
 	// Get Owner by ID
-	public Owner findById(Integer ownerId) {
+	public Owner getById(Integer ownerId) {
 		return ownerRepo.findById(ownerId).get();
 	}
 
 	// Create Owner
 	public void createOwner(Owner owner) {
 		ownerRepo.save(owner);
+	}
+
+	// Delete Owner by ID
+	public void deleteOwnerById(Integer id) {
+		ownerRepo.deleteById(id);
+	}
+
+	// Get a list of all Owners
+	public List<Owner> getAllOwners() {
+		return ownerRepo.findAll();
+	}
+
+	public void updateOwner(Owner owner) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

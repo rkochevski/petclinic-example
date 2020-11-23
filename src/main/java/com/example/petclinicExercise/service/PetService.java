@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.petclinicExercise.entity.Owner;
 import com.example.petclinicExercise.entity.Pet;
 import com.example.petclinicExercise.repository.PetRepository;
 
@@ -20,6 +21,10 @@ public class PetService {
 
 	public void createPet(Pet pet) {
 		petRepo.save(pet);
+	}
+
+	public List<Pet> getByOwner(Owner owner) {
+		return petRepo.findByOwner(owner);
 	}
 
 }

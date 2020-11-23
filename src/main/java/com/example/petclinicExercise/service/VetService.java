@@ -36,7 +36,7 @@ public class VetService {
 		saveVet(updateVet);
 	}
 
-	public void deleteVet(Integer vetId) {
+	public void deleteVetById(Integer vetId) {
 		vetRepo.deleteById(vetId);
 	}
 

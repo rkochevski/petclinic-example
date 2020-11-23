@@ -72,12 +72,11 @@
                         </thead>
                         <tbody>
                             <tr th:each="owner : ${ownersList}">
-<!--                             <a th:href="@{/owners/__${owner.id}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a> -->
-                                <td th:text="${owner.firstName + ' ' + owner.lastName}"></td>
+                            	<td ><a th:href="@{/owners/{id}(id=${owner.id})}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a></td>
                                 <td th:text="${owner.address}"></td>
                                 <td th:text="${owner.city}"></td>
                                 <td th:text="${owner.telephone}"></td>
-<!--                                 <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td> -->
+                                <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td>
                             </tr>
                         </tbody>
                     </table>

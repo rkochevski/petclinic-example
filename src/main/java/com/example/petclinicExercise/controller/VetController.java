@@ -92,7 +92,7 @@ public class VetController {
 	// Delete Vet
 	@PostMapping("/delete/{vetId}")
 	public String deleteVet(@PathVariable("vetId") Integer vetId) {
-		vetService.deleteVet(vetId);
+		vetService.deleteVetById(vetId);
 		return "redirect:/vets/vetsList";
 	}
 

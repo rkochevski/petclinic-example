@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.petclinicExercise.entity.Owner;
 import com.example.petclinicExercise.entity.Pet;
+import com.example.petclinicExercise.entity.Vet;
 import com.example.petclinicExercise.service.OwnerService;
+import com.example.petclinicExercise.service.PetService;
 
 @Controller
 @RequestMapping("/owners")
@@ -22,6 +24,9 @@ public class OwnerController {
 	
 	@Autowired
 	OwnerService ownerService;
+	
+	@Autowired
+	PetService petService;
 	
 	// Get findOrers.html
 	@GetMapping("/find")
@@ -44,6 +49,14 @@ public class OwnerController {
 	public String createOwner(@ModelAttribute("owner") Owner owner) {
 		ownerService.createOwner(owner);
 		return "redirect:/owners/" + owner.getId();
+	}
+	
+	// Get Owner by Last Name
+	@GetMapping("/ownersList")
+	public String ownersListForm(Model model) {
+		List<Owner> results = ownerService.getAllOwners();
+		model.addAttribute("ownersList", results);
+		return "owners/ownersList";
 	}
 	
 	// Get Owner by Last Name
@@ -70,13 +83,28 @@ public class OwnerController {
 	}
 	
 	// Get ownerDetails.html
-	@GetMapping("/{ownerId}")
-	public String showOwnerDetailsPage(@PathVariable("ownerId") Integer ownerId, Model model) {
-		Owner owner = ownerService.findById(ownerId);
-		List<Pet> petsList = owner.getPets();
+	@GetMapping("/{id}")
+	public String showOwnerDetailsPage(@PathVariable("id") Integer id, Model model) {
+		Owner owner = ownerService.getById(id);
+		List<Pet> petsList = petService.getByOwner(owner);
 		model.addAttribute(owner);
 		model.addAttribute("petsList", petsList);
 		return "owners/ownerDetails";
+	}
+	
+	// Get deleteOwnerConfirmationForm.html
+	@GetMapping("/{id}/delete")
+	public String deleteOwnerForm(@PathVariable("id") Integer id, Model model) {
+		Owner owner = ownerService.getById(id);
+		model.addAttribute(owner);
+		return "owners/deleteOwnerConfirmationForm";
+	}
+	
+	// Delete Owner
+	@PostMapping("/delete/{id}")
+	public String deleteOwner(@PathVariable("id") Integer id) {
+		ownerService.deleteOwnerById(id);
+		return "redirect:/owners/ownersList";
 	}
 
 }

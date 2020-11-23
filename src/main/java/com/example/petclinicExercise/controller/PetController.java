@@ -29,21 +29,31 @@ public class PetController {
 	@Autowired
 	OwnerService ownerService;
 	
-	@GetMapping("/owners/{ownerId}/pets/new")
-	public String createOrUpdatePetForm(@PathVariable("ownerId") Integer ownerId, Model model) {
-		Owner owner = ownerService.findById(ownerId);
+	@GetMapping("/owners/{id}/pets/new")
+	public String createOrUpdatePetForm(@PathVariable("id") Integer id, Model model) {
+		Owner owner = ownerService.getById(id);
 		Pet pet = new Pet();
-		pet.setOwner(owner);
 		List<PetType> listPetTypes = petTypeService.getAllPetTypes();
 		model.addAttribute("listPetTypes", listPetTypes);
 		model.addAttribute("pet", pet);
+		model.addAttribute("owner", owner);
 		return "pets/createOrUpdatePetForm";
 	}
 	
-	@PostMapping("/pet/add")
-	public String createPet(@ModelAttribute("pet") Pet pet) {
-		petService.createPet(pet);
-		return "redirect:/owners/" + pet.getOwner().getId();
+	@PostMapping("/owners/{id}/pet/add")
+	public String createPet(@PathVariable("id") Integer id, @ModelAttribute("pet") Pet pet) {
+		Pet newPet = new Pet();
+		Owner owner = ownerService.getById(id);
+		newPet.setName(pet.getName());
+		newPet.setBirthDate(pet.getBirthDate());
+		newPet.setType(pet.getType());
+		newPet.setOwner(owner);
+		List<Pet> pets = petService.getByOwner(owner);
+		pets.add(newPet);
+		petService.createPet(newPet);
+		owner.setPets(pets);
+		ownerService.createOwner(owner);
+		return "redirect:/owners/" + newPet.getOwner().getId();
 	}
 
 }

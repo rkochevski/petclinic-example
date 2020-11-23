@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pets</title>
+    <title>Add Pet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/styles.css" th:href="@{/resources/css/styles.css}">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
@@ -58,10 +58,10 @@
             <div id="main-content" class="container">
             <h2 id="reservation-title" class="text-center">Add Pet</h2>
 	        <section class="col-12 reservation-section offset-md-3">
-	            <form action="" th:action="@{/pet/add}" th:object="${pet}" method="POST">
+	            <form action="" th:action="@{/owners/{id}/pet/add(id=${owner.id})}" th:object="${pet}" method="POST">
                     <div class="form-group col-md-6">
                       <label for="owner-name">Owner</label>
-                      <input type="text" th:field="*{owner.id}" class="form-control" id="owner-name" name="owner-name" th:placeholder="${pet.owner.firstName + ' ' + pet.owner.lastName}" readonly />
+                      <input type="text" th:field="*{owner.id}" class="form-control" id="owner-name" name="owner-name" th:placeholder="${owner.firstName + ' ' + owner.lastName}" readonly />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="pet-name">Name</label>
