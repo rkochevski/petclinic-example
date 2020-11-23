@@ -33,17 +33,15 @@ public class PetController {
 	public String createOrUpdatePetForm(@PathVariable("ownerId") Integer ownerId, Model model) {
 		Owner owner = ownerService.findById(ownerId);
 		Pet pet = new Pet();
-		owner.getPets().add(pet);
+		pet.setOwner(owner);
 		List<PetType> listPetTypes = petTypeService.getAllPetTypes();
 		model.addAttribute("listPetTypes", listPetTypes);
-		model.addAttribute("owner", owner);
 		model.addAttribute("pet", pet);
-		model.addAttribute("type", pet.getType());
 		return "pets/createOrUpdatePetForm";
 	}
 	
 	@PostMapping("/pet/add")
-	public String createPet(@ModelAttribute("pet") Pet pet, @ModelAttribute("owner") Owner owner) {
+	public String createPet(@ModelAttribute("pet") Pet pet) {
 		petService.createPet(pet);
 		return "redirect:/owners/" + pet.getOwner().getId();
 	}

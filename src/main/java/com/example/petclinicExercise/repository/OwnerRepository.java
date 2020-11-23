@@ -14,10 +14,10 @@ import com.example.petclinicExercise.entity.Owner;
 @Repository
 public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 
-//	List<Owner> findByLastName(String lastName);
+	List<Owner> findByLastName(String lastName);
 	
-	@Query("SELECT o FROM Owner o JOIN o.pets WHERE o.lastName LIKE :lastName%")
-	@Transactional(readOnly = true)
-	Collection<Owner> findByLastName(@Param("lastName") String lastName);
+//	@Query("SELECT DISTINCT o FROM Owner o JOIN o.pets WHERE o.lastName LIKE :lastName%")
+//	@Transactional(readOnly = true)
+//	List<Owner> findByLastName(@Param("lastName") String lastName);
 
 }

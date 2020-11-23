@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.petclinicExercise.entity.Owner;
+import com.example.petclinicExercise.entity.Pet;
 import com.example.petclinicExercise.service.OwnerService;
 
 @Controller
@@ -53,7 +54,7 @@ public class OwnerController {
 			owner.setLastName("");
 		}
 		
-		Collection<Owner> results = ownerService.getByLastName(owner.getLastName());
+		List<Owner> results = ownerService.getByLastName(owner.getLastName());
 		
 		if (results.isEmpty()) {
 			return "owners/findOwners";
@@ -72,9 +73,9 @@ public class OwnerController {
 	@GetMapping("/{ownerId}")
 	public String showOwnerDetailsPage(@PathVariable("ownerId") Integer ownerId, Model model) {
 		Owner owner = ownerService.findById(ownerId);
-//		Set<Pet> pets = owner.getPets();
+		List<Pet> petsList = owner.getPets();
 		model.addAttribute(owner);
-//		model.addAttribute("pets", pets);
+		model.addAttribute("petsList", petsList);
 		return "owners/ownerDetails";
 	}
 

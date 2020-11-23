@@ -88,20 +88,19 @@
 				<h2 id="product-title-2" class="text-center">Pets and Visits</h2>
 				<section class="col-12 product-section">
 					<table class="table table-striped">
-						<tr th:each="pet : *{pets}">
-<!-- 						<tr th:each="pet : ${pets}"> -->
-							<td valign="top">
-								<dl class="dl-horizontal">
-									<dt>Name</dt>
-									<dd th:text="${pet.id}"></dd>
-									<dt>Birth Date</dt>
-<!-- 									<dd th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"></dd> -->
-									<dt>Type</dt>
-<!-- 									<dd th:text="${pet.type}"></dd> -->
-								</dl>
-							</td>
-						</tr>
-					</table>
+					    <tr th:each="pet : ${petsList}">
+					        <th>Name</th>
+					        <td class="bold-text" th:text="${pet.name}"></td>
+					    </tr>
+					    <tr>
+					        <th>Birthdate</th>
+<!-- 					        <td th:text="*{pet.birthDate}"></td> -->
+					    </tr>
+					    <tr>
+					        <th>Type</th>
+					        <td th:text="${pet.PetType.name}"></td>
+					    </tr>
+				    </table>
 		        </section>
             </div> <!-- Main Content End -->
         </div>

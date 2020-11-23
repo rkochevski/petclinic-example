@@ -16,7 +16,7 @@ public class OwnerService {
 	OwnerRepository ownerRepo;
 	
 	// Get Owner by lastName
-	public Collection<Owner> getByLastName(String lastName) {
+	public List<Owner> getByLastName(String lastName) {
 		return ownerRepo.findByLastName(lastName);
 	}
 	

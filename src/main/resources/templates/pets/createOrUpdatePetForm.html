@@ -61,7 +61,7 @@
 	            <form action="" th:action="@{/pet/add}" th:object="${pet}" method="POST">
                     <div class="form-group col-md-6">
                       <label for="owner-name">Owner</label>
-                      <input type="text" th:field="*{owner.id}" class="form-control" id="owner-name" name="owner-name" th:placeholder="${owner.firstName + ' ' + owner.lastName}" readonly />
+                      <input type="text" th:field="*{owner.id}" class="form-control" id="owner-name" name="owner-name" th:placeholder="${pet.owner.firstName + ' ' + pet.owner.lastName}" readonly />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="pet-name">Name</label>
