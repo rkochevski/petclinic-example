@@ -1,1 +1,1 @@
-# petclinic-example
+# petclinic-spring-boot-example
