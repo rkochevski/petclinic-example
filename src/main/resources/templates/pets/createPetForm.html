@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veterinarians</title>
+    <title>Add Pet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/styles.css" th:href="@{/resources/css/styles.css}">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
@@ -41,10 +41,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="index.html" th:href="@{/}">HOME</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="shoppingCart.html" th:href="@{/owners/find}">FIND OWNERS</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="shoppingCart.html" th:href="@{/vets/vetsList}">VETERINARIANS</a>
                                 </li>
                             </ul>
@@ -56,35 +56,39 @@
         <div id="body">
             <!-- Main Content -->
             <div id="main-content" class="container">
-            	<br />
-            	<h2 id="product-title-2" class="text-center">Veterinarians</h2>
-            	<br />
-		        <section class="col-12 product-section">
-		            <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Specialties</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="vet : ${vets}">
-                                <td ><a th:href="@{/vets/{vetId}(vetId=${vet.id})}" th:text="${vet.firstName + ' ' + vet.lastName}"/></a></td>
-                                <td><span th:each="specialty : ${vet.specialties}" th:text="${specialty.name} + ' '"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-		        </section>
-	    		<br />
-            	<div class="row" id="add-vet-btn">
-            		<a th:href="@{/vets/new}">
-						<button type="submit" value="submit" class="btn btn-info">Add Veterinarian</button>
-                    </a>
-            	</div>
+            <h2 id="reservation-title" class="text-center">Add Pet</h2>
+	        <section class="col-12 reservation-section offset-md-3">
+	            <form action="" th:action="@{/owners/{id}/pet/add(id=${owner.id})}" th:object="${pet}" method="POST">
+                    <div class="form-group col-md-6">
+                      <label for="owner-name">Owner</label>
+                      <input type="text" th:field="*{owner.id}" class="form-control" id="owner-name" name="owner-name" th:placeholder="${owner.firstName + ' ' + owner.lastName}" readonly />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="pet-name">Name</label>
+                      <input type="text" th:field="*{name}" class="form-control" id="pet-name" name="pet-name" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="birthDate">Birth Date</label>
+                      <input type="date" th:field="*{birthDate}" class="form-control" id="birthDate" name="birthDate" placeholder="YYYY-MM-DD" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                    	<label for="type">Type</label>
+                    	<br />
+                      	<select th:field="*{type}">
+							<option th:value="' '"></option>
+							<option th:each = "type : ${listPetTypes}" th:value="${type.id}" th:utext="${type.name}"/>
+						</select>
+                    </div>
+                    <div class="row">
+                    	<div class="col col-md-6 text-right">
+                    		<button type="submit" class="btn btn-info" id="submit-reservation">Add Pet</button>
+                    	</div>
+                    </div>
+	            </form>
+	        </section>
             </div> <!-- Main Content End -->
         </div>
-        </div>
-    </div>
+	</div>
     
     <script src="js/script.js" th:src="@{/resources/js/script.js}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

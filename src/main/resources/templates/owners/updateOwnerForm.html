@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veterinarians</title>
+    <title>Update Owner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/styles.css" th:href="@{/resources/css/styles.css}">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
@@ -41,10 +41,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="index.html" th:href="@{/}">HOME</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="shoppingCart.html" th:href="@{/owners/find}">FIND OWNERS</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="shoppingCart.html" th:href="@{/vets/vetsList}">VETERINARIANS</a>
                                 </li>
                             </ul>
@@ -56,33 +56,41 @@
         <div id="body">
             <!-- Main Content -->
             <div id="main-content" class="container">
-            	<br />
-            	<h2 id="product-title-2" class="text-center">Veterinarians</h2>
-            	<br />
-		        <section class="col-12 product-section">
-		            <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Specialties</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="vet : ${vets}">
-                                <td ><a th:href="@{/vets/{vetId}(vetId=${vet.id})}" th:text="${vet.firstName + ' ' + vet.lastName}"/></a></td>
-                                <td><span th:each="specialty : ${vet.specialties}" th:text="${specialty.name} + ' '"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-		        </section>
-	    		<br />
-            	<div class="row" id="add-vet-btn">
-            		<a th:href="@{/vets/new}">
-						<button type="submit" value="submit" class="btn btn-info">Add Veterinarian</button>
-                    </a>
-            	</div>
+            <h2 id="reservation-title" class="text-center">Update Owner</h2>
+	        <section class="col-12 reservation-section offset-md-3">
+	            <form action="" th:action="@{/owners/update}" th:object="${owner}" method="POST">
+	            	<div class="form-group col-md-6" style = "display:none">
+                      <label for="id">ID</label>
+                      <input type="text" th:field="*{id}" class="form-control" id="id" name="id" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="firstname">First name</label>
+                      <input type="text" th:field="*{firstName}" class="form-control" id="firstname" name="firstname" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="lastname">Last name</label>
+                      <input type="text" th:field="*{lastName}" class="form-control" id="lastname" name="lastname" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="address">Address</label>
+                      <input type="text" th:field="*{address}" class="form-control" id="address" name="address" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="city">City</label>
+                      <input type="text" th:field="*{city}" class="form-control" id="city" name="city" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="telephone">Telephone</label>
+                      <input type="text" th:field="*{telephone}" class="form-control" id="telephone" name="telephone" placeholder="+389 XXX XXX XXX" pattern="[0-9]{3}[0-9]{3}[0-9]{3}" required />
+                    </div>
+                    <div class="row">
+                    	<div class="col col-md-6 text-center">
+                    		<button type="submit" class="btn btn-info" id="submit-reservation">Update</button>
+                    	</div>
+                    </div>
+	            </form>
+	        </section>
             </div> <!-- Main Content End -->
-        </div>
         </div>
     </div>
     

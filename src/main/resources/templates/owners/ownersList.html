@@ -56,10 +56,12 @@
         <div id="body">
             <!-- Main Content -->
             <div id="main-content" class="container">
+            	<br />
             	<h2 id="product-title-2" class="text-center">Owners</h2>
+            	<br />
 		        <section class="col-12 product-section">
 		            <table class="table">
-                        <thead class="thead-dark">
+                        <thead class="thead-light">
                             <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Address</th>
@@ -70,12 +72,11 @@
                         </thead>
                         <tbody>
                             <tr th:each="owner : ${ownersList}">
-<!--                             <a th:href="@{/owners/__${owner.id}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a> -->
-                                <td th:text="${owner.firstName + ' ' + owner.lastName}"></td>
+                            	<td ><a th:href="@{/owners/{id}(id=${owner.id})}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a></td>
                                 <td th:text="${owner.address}"></td>
                                 <td th:text="${owner.city}"></td>
                                 <td th:text="${owner.telephone}"></td>
-<!--                                 <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td> -->
+                                <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td>
                             </tr>
                         </tbody>
                     </table>

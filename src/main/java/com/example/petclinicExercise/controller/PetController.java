@@ -1,7 +1,5 @@
 package com.example.petclinicExercise.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.petclinicExercise.entity.Owner;
 import com.example.petclinicExercise.entity.Pet;
-import com.example.petclinicExercise.entity.PetType;
 import com.example.petclinicExercise.service.OwnerService;
 import com.example.petclinicExercise.service.PetService;
 import com.example.petclinicExercise.service.PetTypeService;
@@ -29,23 +25,40 @@ public class PetController {
 	@Autowired
 	OwnerService ownerService;
 	
-	@GetMapping("/owners/{ownerId}/pets/new")
-	public String createOrUpdatePetForm(@PathVariable("ownerId") Integer ownerId, Model model) {
-		Owner owner = ownerService.findById(ownerId);
-		Pet pet = new Pet();
-		owner.addPet(pet);
-		List<PetType> listPetTypes = petTypeService.getAllPetTypes();
-		model.addAttribute("listPetTypes", listPetTypes);
-		model.addAttribute("owner", owner);
-		model.addAttribute("pet", pet);
-		model.addAttribute("type", pet.getType());
-		return "pets/createOrUpdatePetForm";
+	// Get createPetForm.html
+	@GetMapping("/owners/{id}/pets/new")
+	public String createPetForm(@PathVariable("id") Integer id, Model model) {
+		return petService.createPetForm(id, model);
 	}
 	
-	@PostMapping("/pet/add")
-	public String createPet(@ModelAttribute("pet") Pet pet, @ModelAttribute("owner") Owner owner) {
-		petService.createPet(pet);
-		return "redirect:/owners/" + pet.getOwner().getId();
+	// Create new Pet
+	@PostMapping("/owners/{id}/pet/add")
+	public String createPet(@PathVariable("id") Integer id, @ModelAttribute("pet") Pet pet) {
+		return petService.createNewPetReturnOwnerInfoPage(id, pet);
+	}
+	
+	// Get updatePetFOrm.html
+	@GetMapping("/owners/{ownerId}/pets/{petId}/edit")
+	public String updatePetForm(@PathVariable("petId") Integer petId, @PathVariable("ownerId") Integer ownerId, Model model) {
+		return petService.updatePetForm(petId, ownerId, model);
+	}
+	
+	// Update Pet
+	@PostMapping("/owners/{ownerId}/pet/update")
+	public String updatePet(@PathVariable("ownerId") Integer ownerId, @ModelAttribute("pet") Pet pet) {
+		return petService.updatePetReturnOwnerInfoPage(ownerId, pet);
+	}
+	
+	// Get deletePetConfirmationForm.html
+	@GetMapping("/owners/{ownerId}/pet/{petId}/delete")
+	public String deletePetConfirmationForm(@PathVariable("petId") Integer petId, Model model) {
+		return petService.deletePetConfirmationForm(petId, model);
+	}
+	
+	// Delete Pet
+	@PostMapping("/owners/{ownerId}/pet/{petId}/delete")
+	public String deletePet(@PathVariable("petId") Integer petId, @PathVariable("ownerId") Integer ownerId) {
+		return petService.deletePetReturnOwnerDetails(petId, ownerId);
 	}
 
 }
