@@ -14,6 +14,7 @@ public class SpecialtyService {
 	@Autowired
 	SpecialtyRepository specialtyRepo;
 
+	// Get a list of all vet specialties
 	public List<Specialty> getAllSpecialties() {
 		return specialtyRepo.findAll();
 	}

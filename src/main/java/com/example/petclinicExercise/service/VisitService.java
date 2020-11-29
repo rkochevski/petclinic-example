@@ -19,16 +19,18 @@ public class VisitService {
 	@Autowired
 	VisitRepository visitRepo;
 
-	public String CreateOrUpdateVisitForm(Integer petId, Model model) {
+	// Display createVisitForm
+	public String createVisitForm(Integer petId, Model model) {
 		Visit visit = new Visit();
 		Pet pet = petService.getById(petId);
 		List<Visit> visits = getByPetId(petId);
 		pet.setVisits(visits);
 		model.addAttribute("pet", pet);
 		model.addAttribute("visit", visit);
-		return "visits/createOrUpdateVisitForm";
+		return "visits/createVisitForm";
 	}
 
+	// Create new Visit and display ownerDetails page
 	public String addVisitReturnOwnerDetailsPage(Integer petId, Visit visit) {
 		Visit newVisit = new Visit();
 		Pet pet = petService.getById(petId);
@@ -43,14 +45,17 @@ public class VisitService {
 		return "redirect:/owners/" + pet.getOwner().getId();
 	}
 	
+	// Create new Visit
 	private void createVisit(Visit newVisit) {
 		visitRepo.save(newVisit);
 	}
 
+	// Get a list of off Visits by pet id
 	public List<Visit> getByPetId(Integer petId) {
 		return visitRepo.findByPetId(petId);
 	}
 
+	// Delete all visits by pet id
 	public void deleteByPetId(Integer petId) {
 		visitRepo.deleteByPetId(petId);
 	}

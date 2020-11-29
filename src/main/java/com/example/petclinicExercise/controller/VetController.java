@@ -1,7 +1,5 @@
 package com.example.petclinicExercise.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.example.petclinicExercise.entity.Owner;
-import com.example.petclinicExercise.entity.Pet;
-import com.example.petclinicExercise.entity.Specialty;
 import com.example.petclinicExercise.entity.Vet;
 import com.example.petclinicExercise.service.SpecialtyService;
 import com.example.petclinicExercise.service.VetService;
@@ -35,10 +29,10 @@ public class VetController {
 		return vetService.vetsListPage(model);
 	}
 	
-	// Get createOrUpdateVetForm.html
+	// Get createVetForm.html
 	@GetMapping("/new")
-	public String createOrUpdateVetForm(Model model) {
-		return vetService.createOrUpdateVetForm(model);
+	public String createVetForm(Model model) {
+		return vetService.createVetForm(model);
 	}
 	
 	// Create Vet in db
@@ -74,7 +68,7 @@ public class VetController {
 	// Delete Vet
 	@PostMapping("/delete/{vetId}")
 	public String deleteVet(@PathVariable("vetId") Integer vetId) {
-		return vetService.createVetReturnVetsListPage(vetId);
+		return vetService.deleteVetReturnVetsListPage(vetId);
 	}
 
 }

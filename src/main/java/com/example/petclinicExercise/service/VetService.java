@@ -19,18 +19,22 @@ public class VetService {
 	@Autowired
 	SpecialtyService specialtyService;
 
+	// Get a list of all Veterinarians
 	public List<Vet> getAllVets() {
 		return vetRepo.findAll();
 	}
 
+	// Save Veterinarian
 	public void saveVet(Vet vet) {
 		vetRepo.save(vet);
 	}
 
+	// Find Veterinarian by id
 	public Vet findById(Integer vetId) {
 		return vetRepo.findById(vetId).get();
 	}
 
+	// Update Veterinarian
 	public void updateVet(Vet vet, Integer vetId) {
 		Vet updateVet = findById(vetId);
 		updateVet.setFirstName(vet.getFirstName());
@@ -40,10 +44,12 @@ public class VetService {
 		saveVet(updateVet);
 	}
 
+	// Delete Veterinarian by id
 	public void deleteVetById(Integer vetId) {
 		vetRepo.deleteById(vetId);
 	}
 
+	// Display vetsList page
 	public String vetsListPage(Model model) {
 		List<Vet> vets = getAllVets();
 		model.addAttribute("vets", vets);
@@ -52,25 +58,29 @@ public class VetService {
 		return "vets/vetsList";
 	}
 
-	public String createOrUpdateVetForm(Model model) {
+	// Display createVetForm
+	public String createVetForm(Model model) {
 		Vet vet = new Vet();
 		model.addAttribute("vet", vet);
 		List<Specialty> listSpecialties = specialtyService.getAllSpecialties();
 		model.addAttribute("listSpecialties", listSpecialties);
-		return "vets/createOrUpdateVetForm";
+		return "vets/createVetForm";
 	}
 
+	// Create Veterinarian and display vetsList page
 	public String createVetReturnVetsListPage(Vet vet) {
 		saveVet(vet);
 		return "redirect:vetsList";
 	}
 
+	// Display vetDetails page
 	public String vetDetailsPage(Integer vetId, Model model) {
 		Vet vet = findById(vetId);
 		model.addAttribute(vet);
 		return "vets/vetDetails";
 	}
 
+	// Display vetUpdateForm
 	public String vetUpdateForm(Integer vetId, Model model) {
 		Vet vet = findById(vetId);
 		model.addAttribute(vet);
@@ -79,18 +89,21 @@ public class VetService {
 		return "vets/vetUpdateForm";
 	}
 
+	// Update Veterinarian and display vetsList page
 	public String updateVetReturnVetsListPage(Integer vetId, Vet vet) {
 		updateVet(vet, vetId);
 		return "redirect:/vets/vetsList";
 	}
 
+	// Display deleteVetConfirmationForm
 	public String deleteVetConfirmationForm(Integer vetId, Model model) {
 		Vet vet = findById(vetId);
 		model.addAttribute(vet);
 		return "vets/deleteVetConfirmationForm";
 	}
 
-	public String createVetReturnVetsListPage(Integer vetId) {
+	// Delete Veterinarian and display vetsList page
+	public String deleteVetReturnVetsListPage(Integer vetId) {
 		deleteVetById(vetId);
 		return "redirect:/vets/vetsList";
 	}

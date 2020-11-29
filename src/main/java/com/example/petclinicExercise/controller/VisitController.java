@@ -1,7 +1,5 @@
 package com.example.petclinicExercise.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +19,7 @@ public class VisitController {
 	
 	@GetMapping("/owners/{ownerId}/pets/{petId}/visits/new")
 	public String initNewVisitForm(@PathVariable("petId") Integer petId, Model model) {
-		return visitService.CreateOrUpdateVisitForm(petId, model);
+		return visitService.createVisitForm(petId, model);
 	}
 	
 	@PostMapping("/owners/{ownerId}/pets/{petId}/visits/add")

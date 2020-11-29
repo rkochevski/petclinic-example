@@ -27,28 +27,33 @@ public class PetService {
 	@Autowired
 	VisitService visitService;
 
+	// Get a list of all pets
 	public List<Pet> getAllPets() {
 		return petRepo.findAll();
 	}
 
+	// Create Pet
 	public void createPet(Pet pet) {
 		petRepo.save(pet);
 	}
 
+	// Get a list of all Pets by Owner
 	public List<Pet> getByOwner(Owner owner) {
 		return petRepo.findByOwner(owner);
 	}
 
-	public String createOrUpdatePetForm(Integer id, Model model) {
+	// Display createPetForm
+	public String createPetForm(Integer id, Model model) {
 		Owner owner = ownerService.getById(id);
 		Pet pet = new Pet();
 		List<PetType> listPetTypes = petTypeService.getAllPetTypes();
 		model.addAttribute("listPetTypes", listPetTypes);
 		model.addAttribute("pet", pet);
 		model.addAttribute("owner", owner);
-		return "pets/createOrUpdatePetForm";
+		return "pets/createPetForm";
 	}
 
+	// Create new Pet and display ownerDetails page
 	public String createNewPetReturnOwnerInfoPage(Integer id, Pet pet) {
 		Pet newPet = new Pet();
 		Owner owner = ownerService.getById(id);
@@ -64,10 +69,12 @@ public class PetService {
 		return "redirect:/owners/" + newPet.getOwner().getId();
 	}
 
+	// Get Pet by pet id
 	public Pet getById(Integer petId) {
 		return petRepo.findById(petId).get();
 	}
 
+	// Display updatePetForm
 	public String updatePetForm(Integer petId, Integer ownerId, Model model) {
 		Owner owner = ownerService.getById(ownerId);
 		model.addAttribute("owner", owner);
@@ -78,18 +85,20 @@ public class PetService {
 		return "pets/updatePetForm";
 	}
 
+	// Update Pet and display ownerDetails
 	public String updatePetReturnOwnerInfoPage(Integer ownerId, Pet pet) {
 		createPet(pet);
 		return "redirect:/owners/" + pet.getOwner().getId();
 	}
 
+	// Display deletePetConfirmationForm
 	public String deletePetConfirmationForm(Integer petId, Model model) {
 		Pet pet = getById(petId);
 		model.addAttribute("pet", pet);
 		return "pets/deletePetConfirmationForm";
 	}
 
-
+	// Delete Pet and display ownerDetails page
 	@Transactional
 	public String deletePetReturnOwnerDetails(Integer petId, Integer ownerId) {
 		visitService.deleteByPetId(petId);

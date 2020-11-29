@@ -14,6 +14,7 @@ public class PetTypeService {
 	@Autowired
 	PetTypeRepository petTypeRepo;
 
+	// Get list of all pet types
 	public List<PetType> getAllPetTypes() {
 		return petTypeRepo.findAll();
 	}

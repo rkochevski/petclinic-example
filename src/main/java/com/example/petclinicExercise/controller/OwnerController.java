@@ -1,8 +1,5 @@
 package com.example.petclinicExercise.controller;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.petclinicExercise.entity.Owner;
-import com.example.petclinicExercise.entity.Pet;
-import com.example.petclinicExercise.entity.Vet;
 import com.example.petclinicExercise.service.OwnerService;
 import com.example.petclinicExercise.service.PetService;
 
@@ -34,10 +29,10 @@ public class OwnerController {
 		return ownerService.findOwnersPage(model);
 	}
 	
-	// Get createOrUpdateOwnerForm.html
+	// Get createOwnerForm.html
 	@GetMapping("/new")
-	public String createOrUpdateOwnerForm(Model model) {
-		return ownerService.createOrUpdateOwnerForm(model);
+	public String createOwnerForm(Model model) {
+		return ownerService.createOwnerForm(model);
 	}
 	
 	// Create Owner
