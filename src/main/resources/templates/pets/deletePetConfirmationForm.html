@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Pet</title>
+    <title>Delete Pet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/styles.css" th:href="@{/resources/css/styles.css}">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
@@ -41,10 +41,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="index.html" th:href="@{/}">HOME</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="shoppingCart.html" th:href="@{/owners/find}">FIND OWNERS</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="shoppingCart.html" th:href="@{/vets/vetsList}">VETERINARIANS</a>
                                 </li>
                             </ul>
@@ -56,36 +56,32 @@
         <div id="body">
             <!-- Main Content -->
             <div id="main-content" class="container">
-            <h2 id="reservation-title" class="text-center">Add Pet</h2>
-	        <section class="col-12 reservation-section offset-md-3">
-	            <form action="" th:action="@{/owners/{id}/pet/add(id=${owner.id})}" th:object="${pet}" method="POST">
-                    <div class="form-group col-md-6">
-                      <label for="owner-name">Owner</label>
-                      <input type="text" th:field="*{owner.id}" class="form-control" id="owner-name" name="owner-name" th:placeholder="${owner.firstName + ' ' + owner.lastName}" readonly />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="pet-name">Name</label>
-                      <input type="text" th:field="*{name}" class="form-control" id="pet-name" name="pet-name" required />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="birthDate">Birth Date</label>
-                      <input type="date" th:field="*{birthDate}" class="form-control" id="birthDate" name="birthDate" placeholder="YYYY-MM-DD" required />
-                    </div>
-                    <div class="form-group col-md-6">
-                    	<label for="type">Type</label>
-                    	<br />
-                      	<select th:field="*{type}">
-							<option th:value="' '"></option>
-							<option th:each = "type : ${listPetTypes}" th:value="${type.id}" th:utext="${type.name}"/>
-						</select>
-                    </div>
-                    <div class="row">
-                    	<div class="col col-md-6 text-right">
-                    		<button type="submit" class="btn btn-info" id="submit-reservation">Add Pet</button>
-                    	</div>
-                    </div>
-	            </form>
-	        </section>
+            	<br />
+            	<br />
+            	<br />
+            	<p class="lead" align="center">
+  					Are you sure you want to Delete this pet from the system?
+				</p>
+           		<br />
+		        <section class="col-12 product-section">
+			        <table class="table table-borderless" th:object="${pet}">
+					    <tr>
+					        <td class="bold-text" th:text="*{name}" align="center"></td>
+					    </tr>
+					    <tr>
+					        <td class="bold-text" th:text="*{type.name}" align="center"></td>
+					    </tr>
+				    </table>
+				    <br />
+				    <div style = "text-align:center">
+					    <a th:href="@{/owners/{ownerId}(ownerId=${pet.owner.id})}">
+			            	<button type="submit" value="submit" class="btn btn-info">NO</button>
+		                </a>
+		                <form th:action="@{/owners/{ownerId}/pet/{petId}/delete(ownerId=${pet.owner.id},petId=${pet.id})}" th:object="${pet}" method="POST" style="display:inline-block">
+		                	<button type="submit" value="submit" class="btn btn-outline-danger">DELETE</button>
+		                </form>
+				    </div>
+				</section>
             </div> <!-- Main Content End -->
         </div>
 	</div>

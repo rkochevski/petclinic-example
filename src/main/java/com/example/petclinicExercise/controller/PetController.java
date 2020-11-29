@@ -31,29 +31,32 @@ public class PetController {
 	
 	@GetMapping("/owners/{id}/pets/new")
 	public String createOrUpdatePetForm(@PathVariable("id") Integer id, Model model) {
-		Owner owner = ownerService.getById(id);
-		Pet pet = new Pet();
-		List<PetType> listPetTypes = petTypeService.getAllPetTypes();
-		model.addAttribute("listPetTypes", listPetTypes);
-		model.addAttribute("pet", pet);
-		model.addAttribute("owner", owner);
-		return "pets/createOrUpdatePetForm";
+		return petService.createOrUpdatePetForm(id, model);
 	}
 	
 	@PostMapping("/owners/{id}/pet/add")
 	public String createPet(@PathVariable("id") Integer id, @ModelAttribute("pet") Pet pet) {
-		Pet newPet = new Pet();
-		Owner owner = ownerService.getById(id);
-		newPet.setName(pet.getName());
-		newPet.setBirthDate(pet.getBirthDate());
-		newPet.setType(pet.getType());
-		newPet.setOwner(owner);
-		List<Pet> pets = petService.getByOwner(owner);
-		pets.add(newPet);
-		petService.createPet(newPet);
-		owner.setPets(pets);
-		ownerService.createOwner(owner);
-		return "redirect:/owners/" + newPet.getOwner().getId();
+		return petService.createNewPetReturnOwnerInfoPage(id, pet);
+	}
+	
+	@GetMapping("/owners/{ownerId}/pets/{petId}/edit")
+	public String updatePetForm(@PathVariable("petId") Integer petId, @PathVariable("ownerId") Integer ownerId, Model model) {
+		return petService.updatePetForm(petId, ownerId, model);
+	}
+	
+	@PostMapping("/owners/{ownerId}/pet/update")
+	public String updatePet(@PathVariable("ownerId") Integer ownerId, @ModelAttribute("pet") Pet pet) {
+		return petService.updatePetReturnOwnerInfoPage(ownerId, pet);
+	}
+	
+	@GetMapping("/owners/{ownerId}/pet/{petId}/delete")
+	public String deletePetConfirmationForm(@PathVariable("petId") Integer petId, Model model) {
+		return petService.deletePetConfirmationForm(petId, model);
+	}
+	
+	@PostMapping("/owners/{ownerId}/pet/{petId}/delete")
+	public String deletePet(@PathVariable("petId") Integer petId, @PathVariable("ownerId") Integer ownerId) {
+		return petService.deletePetReturnOwnerDetails(petId, ownerId);
 	}
 
 }

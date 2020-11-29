@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Pet</title>
+    <title>Visits</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/styles.css" th:href="@{/resources/css/styles.css}">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
@@ -54,39 +54,60 @@
             </header>
         </div>
         <div id="body">
-            <!-- Main Content -->
+			<!-- Main Content -->
             <div id="main-content" class="container">
-            <h2 id="reservation-title" class="text-center">Add Pet</h2>
-	        <section class="col-12 reservation-section offset-md-3">
-	            <form action="" th:action="@{/owners/{id}/pet/add(id=${owner.id})}" th:object="${pet}" method="POST">
-                    <div class="form-group col-md-6">
-                      <label for="owner-name">Owner</label>
-                      <input type="text" th:field="*{owner.id}" class="form-control" id="owner-name" name="owner-name" th:placeholder="${owner.firstName + ' ' + owner.lastName}" readonly />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="pet-name">Name</label>
-                      <input type="text" th:field="*{name}" class="form-control" id="pet-name" name="pet-name" required />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="birthDate">Birth Date</label>
-                      <input type="date" th:field="*{birthDate}" class="form-control" id="birthDate" name="birthDate" placeholder="YYYY-MM-DD" required />
-                    </div>
-                    <div class="form-group col-md-6">
-                    	<label for="type">Type</label>
-                    	<br />
-                      	<select th:field="*{type}">
-							<option th:value="' '"></option>
-							<option th:each = "type : ${listPetTypes}" th:value="${type.id}" th:utext="${type.name}"/>
-						</select>
-                    </div>
-                    <div class="row">
-                    	<div class="col col-md-6 text-right">
-                    		<button type="submit" class="btn btn-info" id="submit-reservation">Add Pet</button>
-                    	</div>
-                    </div>
-	            </form>
-	        </section>
-            </div> <!-- Main Content End -->
+	            <h2 id="reservation-title" class="text-center">Visits</h2>
+		        <section class="col-12 reservation-section">
+			        <b>Pet</b>
+					<table class="table table-striped">
+						<thead>
+					    	<tr>
+					    		<th>Name</th>
+					    		<th>Birth Date</th>
+					    		<th>Type</th>
+					    		<th>Owner</th>
+					    	</tr>
+					  	</thead>
+							<tr>
+								<td th:text="${pet.name}"></td>
+								<td
+								  th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"></td>
+								<td th:text="${pet.type.name}"></td>
+								<td>
+									<a th:href="@{/owners/{id}(id=${pet.owner.id})}" th:text="${pet.owner?.firstName + ' ' + pet.owner?.lastName}"/></a>
+								</td>
+							</tr>
+					</table>
+					<section class="col-12 reservation-section offset-md-3">
+						<form action="" th:action="@{/owners/{ownerId}/pets/{petId}/visits/add(ownerId=${pet.owner.id},petId=${pet.id})}" th:object="${visit}" method="POST">
+			            <div class="form-group col-md-6">
+			              <label for="visit-date">Date</label>
+		                     <input type="date" th:field="*{date}" class="form-control" id="visit-date" name="visit-date" placeholder="YYYY-MM-DD" required />
+			            </div>
+						<div class="form-group col-md-6">
+							<label for="visit-description">Description</label>
+							<input type="text" th:field="*{description}" class="form-control" id="visit-description" name="visit-description" required />
+						</div>
+		                <div class="row">
+		                   	<div class="col col-md-6 text-right">
+		                   		<button type="submit" class="btn btn-info" id="submit-reservation">Add Visit</button>
+		                   </div>
+		            	</div>
+		            </form>
+					</section>
+					<b>Previous Visits</b>
+					<table class="table table-striped">
+						<tr>
+							<th>Date</th>
+							<th>Description</th>
+						</tr>
+						<tr th:each="visit : ${pet.visits}">
+							<td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}"></td>
+							<td th:text=" ${visit.description}"></td>
+						</tr>
+					</table>
+		        </section>
+			</div> <!--  Main Content End -->
         </div>
 	</div>
     
